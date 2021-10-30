@@ -1,4 +1,5 @@
 from pathlib import Path
+import django_heroku
 # import os
 # from environs import Env
 
@@ -116,3 +117,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [str(BASE_DIR.joinpath('static'))] # new
 STATIC_ROOT = str(BASE_DIR.joinpath('staticfiles')) # new
 STATICFILES_STORAGE ='whitenoise.storage.CompressedManifestStaticFilesStorage' # new
+
+django_heroku.settings(locals())
