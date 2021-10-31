@@ -11,6 +11,10 @@ from django.conf import settings
 file_path=os.path.join(settings.BASE_DIR,"courses.csv")
 # Create your views here.
 data=pd.read_csv(file_path)
+
+def StudyGroup(request):
+    return render (request, 'courses/study_group.html')
+    
 def HomePageView(request):
     courses={}
     urls={}
