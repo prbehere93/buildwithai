@@ -36,24 +36,21 @@ def HomePageView(request):
         
         sim_scores = sorted(sim_scores,key =lambda x:x[1],reverse= True)
         # Get the scores of top 10 best fit courses
-        sim_scores = sim_scores[1:10]
+        sim_scores = sim_scores[1:11]
         # getting the original indices from the data
         indices = [i[0]for i in sim_scores]
         
         return data[['title','url','instructionalLevel']].iloc[indices]
 
     if request.method=='POST':
-        print(settings.BASE_DIR)
         search_form=SearchCoursesForm(request.POST)
         if search_form.is_valid():
-            print(data)
             search=search_form.cleaned_data['search']
             subject=search_form.cleaned_data['subject']
             level=search_form.cleaned_data['level']
 
             result_dict=get_recommendations(search+" "+subject+" "+level,data['corpus'])
-            courses=result_dict['title'].to_dict().values()
-            print(result_dict)
+            courses=result_dict.to_dict('records')
 
     else:
         search_form=SearchCoursesForm()
