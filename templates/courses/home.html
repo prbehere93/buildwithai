@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+    <!-- {% if user.is_authenticated %}
+        <h2>Hi {{user.username}}</h2>
+        <p><a href="#">Log Out</a></p>
+    
+    {% else %}
+        <p>You're not logged in</p>
+        <a href="#">Log In</a>
+        <a href="#">Sign Up</a>
+    {% endif %} -->
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ search_form|crispy }}
+        <br>
+        <button class="btn btn-outline-success" type="submit">Submit</button>
+    </form>
+
+    
+    {% if courses %}
+        
+        {% for course in courses %}
+        <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{course}}</h5>
+              <p class="card-text"></p>
+              <a href="#" class="btn btn-primary">Link To Course</a>
+            </div>
+          </div>
+        {% endfor %}
+
+        
+    {% endif %}
+        
+{% endblock content %}
