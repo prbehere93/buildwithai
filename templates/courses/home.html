@@ -4,17 +4,8 @@
 {% block title %}Home{% endblock title %}
 
 {% block content %}
-    <!-- {% if user.is_authenticated %}
-        <h2>Hi {{user.username}}</h2>
-        <p><a href="#">Log Out</a></p>
-    
-    {% else %}
-        <p>You're not logged in</p>
-        <a href="#">Log In</a>
-        <a href="#">Sign Up</a>
-    {% endif %} -->
 
-    <form method="POST" enctype="multipart/form-data">
+<form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ search_form|crispy }}
         <br>
@@ -28,13 +19,21 @@
         <div class="card">
             <div class="card-body">
               <h5 class="card-title">{{course.title}}</h5>
-              <p class="card-text">Level: {{course.instructionalLevel}}</p>
+                <p class="card-text">Level: {{course.instructionalLevel}}</p>
+                <p class="card-text">Source: {{course.source}}</p>
+                <p class="card-text">Institution: {{course.institution}}</p>
               <a href="{{ course.url }}" class="btn btn-primary" target="_blank">Link To Course</a>
             </div>
-          </div>
+        </div>
         {% endfor %}
 
-        
+    {% else %}
+    <br>
+      <div class="card">
+        <div class="card-body">
+          <p class="card-text">No Courses found, try changing course levels. To display all relevant courses, select 'All Levels' </p>
+        </div>
+      </div>
     {% endif %}
         
 {% endblock content %}

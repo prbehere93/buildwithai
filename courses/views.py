@@ -43,8 +43,7 @@ def HomePageView(request):
         sim_scores = sim_scores[1:11]
         # getting the original indices from the data
         indices = [i[0]for i in sim_scores]
-        
-        return data[['title','url','instructionalLevel']].iloc[indices]
+        return data[['title','url','instructionalLevel','source','institution','isPaid']].iloc[indices]
 
     if request.method=='POST':
         search_form=SearchCoursesForm(request.POST)
@@ -54,6 +53,8 @@ def HomePageView(request):
             level=search_form.cleaned_data['level']
 
             result_dict=get_recommendations(search+" "+subject+" "+level,data['corpus'])
+            if level!="All Levels":
+                result_dict=result_dict[result_dict['instructionalLevel']==level]
             courses=result_dict.to_dict('records')
 
     else:
