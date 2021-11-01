@@ -1,4 +1,6 @@
+import re
 from django.shortcuts import render
+from django.utils.functional import empty
 from django.views.generic import TemplateView
 from django.views.generic.base import View
 import pandas as pd
@@ -44,7 +46,7 @@ def HomePageView(request):
         sim_scores = sim_scores[1:11]
         # getting the original indices from the data
         indices = [i[0]for i in sim_scores]
-        return data[['title','url','instructionalLevel','source','institution','isPaid']].iloc[indices]
+        return data[['title','url','instructionalLevel','Subject','source','institution','isPaid']].iloc[indices]
 
     if request.method=='POST':
         search_form=SearchCoursesForm(request.POST)
@@ -53,12 +55,13 @@ def HomePageView(request):
             subject=search_form.cleaned_data['subject']
             level=search_form.cleaned_data['level']
 
-            result_dict=get_recommendations(search+" "+subject+" "+level,data['corpus'])
+            result_dict=get_recommendations(search+" "+level,data['corpus'])
+            result_dict=result_dict[result_dict['Subject']==subject]
             if level!="All Levels":
                 result_dict=result_dict[result_dict['instructionalLevel']==level]
+            if result_dict.empty:
+                messages.add_message(request, messages.INFO,'If you find no courses, try changing course levels. To display all relevant courses, select course level as "All Levels"')
             courses=result_dict.to_dict('records')
-            messages.add_message(request, messages.INFO,'If you find no courses, try changing course levels. To display all relevant courses, select course level as "All Levels"')
-
     else:
         search_form=SearchCoursesForm()
     return render (request, 'courses/home.html',{'search_form':search_form,
