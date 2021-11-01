@@ -4,7 +4,14 @@
 {% block title %}Home{% endblock title %}
 
 {% block content %}
-
+{% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">
+        <li class="ml-4">{{ message }}</li> 
+    </div>
+      {% endfor %}
+  </ul>
+{% endif %}
 <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ search_form|crispy }}
@@ -12,7 +19,7 @@
         <button class="btn btn-outline-success" type="submit">Submit</button>
     </form>
 
-    
+
     {% if courses %}
         
         {% for course in courses %}
@@ -27,13 +34,6 @@
         </div>
         {% endfor %}
 
-    {% else %}
-    <br>
-      <div class="card">
-        <div class="card-body">
-          <p class="card-text">No Courses found, try changing course levels. To display all relevant courses, select 'All Levels' </p>
-        </div>
-      </div>
     {% endif %}
         
 {% endblock content %}

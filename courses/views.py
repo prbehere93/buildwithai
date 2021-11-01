@@ -7,6 +7,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
 from .forms import SearchCoursesForm
 from django.conf import settings
+from django.contrib import messages
 
 file_path=os.path.join(settings.BASE_DIR,"courses.csv")
 # Create your views here.
@@ -56,6 +57,7 @@ def HomePageView(request):
             if level!="All Levels":
                 result_dict=result_dict[result_dict['instructionalLevel']==level]
             courses=result_dict.to_dict('records')
+            messages.add_message(request, messages.INFO,'If you find no courses, try changing course levels. To display all relevant courses, select course level as "All Levels"')
 
     else:
         search_form=SearchCoursesForm()
