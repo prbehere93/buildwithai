@@ -1,10 +1,54 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
-{% block title %}Home{% endblock title %}
+{% block title %}Study Group{% endblock title %}
 
 {% block content %}
-    <p>Put the forms/input for the study group here</p>
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            <li class="ml-4">{{ message }}</li> 
+        </div>
+        {% endfor %}
+    </ul>
+    {% endif %}
     <!-- write html here -->
-
-    {% endblock content %}
+    <div class="container">
+    <form method="POST", enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="TimeZone">TimeZone</label>
+            <select class="form-control" id="TimeZoneSelect">
+              <option>GMT +05:30</option>
+              <option>GMT +02:00</option>
+              <option>GMT -06:00</option>
+              <option>GMT -05:00</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="Time">Time</label>
+            <select class="form-control" id="Time">
+              <option>Morning (6am to Noon)</option>
+              <option>Afternoon (Noon to 4pm)</option>
+              <option>Evening (4pm to 8pm)</option>
+              <option>Night (8pm to Midnight)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="Hours">No. of Hours (per week)</label>
+            <select class="form-control" id="Hours">
+              <option>2-4 hrs</option>
+              <option>4-8 hrs</option>
+              <option>8-12 hrs</option>
+              <option>12+ hrs</option>
+            </select>
+        </div>
+        
+        <!-- <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        </div> -->
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    </div>
+{% endblock content %}

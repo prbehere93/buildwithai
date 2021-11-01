@@ -12,7 +12,11 @@
       {% endfor %}
   </ul>
 {% endif %}
-<form method="POST" enctype="multipart/form-data">
+    
+    {% if user.is_authenticated %}
+      <h5>Hi {{ user.username }} you're logged in</h5>
+    {% endif %}
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ search_form|crispy }}
         <br>

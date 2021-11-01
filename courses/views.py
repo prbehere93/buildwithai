@@ -16,7 +16,10 @@ file_path=os.path.join(settings.BASE_DIR,"courses.csv")
 data=pd.read_csv(file_path)
 
 def StudyGroup(request):
-    return render (request, 'courses/study_group.html')
+    if request.method=='POST':
+        messages.add_message(request, messages.SUCCESS,'Form Submitted')
+          
+    return render(request, 'courses/study_group.html')
     
 def HomePageView(request):
     courses={}
