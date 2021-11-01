@@ -2,16 +2,18 @@ from django import forms
 
 class SearchCoursesForm(forms.Form):
     SUBJECTS = [
-    ('IT and Web Development', 'IT and Web Development'),
+    ('Web Development', 'Web Development'),
     ('Graphic Design', 'Graphic Design'),
     ('Music', 'Music'),
-    ('Business', 'Business'),]
+    ('Business', 'Business'),
+    ('Data Science', 'Data Science'),
+    ('Computer Programming', 'Computer Programming')]
     
     LEVELS = [
-    ('All Levels', 'All Levels'),
     ('Beginner Level', 'Beginner Level'),
     ('Intermediate Level', 'Intermediate Level'),
-    ('Expert Level', 'Expert Level'),]
+    ('Expert Level', 'Expert Level'),
+    ('All Levels', 'All Levels'),]
 
 
     search=forms.CharField(label="Search Courses",max_length=100)

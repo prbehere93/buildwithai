@@ -55,8 +55,8 @@ def HomePageView(request):
             subject=search_form.cleaned_data['subject']
             level=search_form.cleaned_data['level']
 
-            result_dict=get_recommendations(search+" "+level,data['corpus'])
-            result_dict=result_dict[result_dict['Subject']==subject]
+            result_dict=get_recommendations(search+" "+subject+" "+level,data['corpus'])
+            # result_dict=result_dict[result_dict['Subject']==subject]
             if level!="All Levels":
                 result_dict=result_dict[result_dict['instructionalLevel']==level]
             if result_dict.empty:
